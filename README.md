@@ -37,7 +37,7 @@ git config --global user.name "username"
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 9) You should now have two files: ~/.ssh/id_ed25519 and ~/.ssh/id_ed25519.pub
-10) Start the ssh-agent so we can add the key to our system, you should usee the process ID of the agent printed in the terminal.
+10) Start the ssh-agent so we can add the key to our system, you should see the process ID of the agent printed in the terminal.
 ```
 eval "$(ssh-agent -s)"
 ```
