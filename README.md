@@ -3,9 +3,7 @@
 This assumes you have docker installed on a Linux machine and the permission to run it.
 
 1) On github, create a repository for your project (like this one)
-2) On your linux machine, start a new "rocker" Docker container for whichever version of R you want. If you just want the latest rocker build you can specify "latest" instead of a version number. An example command to start the Docker container is below. The -v (volume) option links a directory on the local filesystem to a location within the container. The locations after the ":" will be created for you in the container. This does not copy the files, it enables the docker container to access the files on the local filesystem, so any changes you make are visible from outside the docker container. If you delete the files from within the docker container, they are gone forever. If you delete the docker container, your files will not be deleted. 
-
-The github repository will always be cloned into a new directory in your container. I don't think it's possible to have your home directory in the container (/home/rstudio) also be the cloned github repository. 
+2) On your linux machine, start a new "rocker" Docker container for whichever version of R you want. If you just want the latest rocker build you can specify "latest" instead of a version number. An example command to start the Docker container is below. The -v (volume) option links a directory on the local filesystem to a location within the container. The locations after the ":" will be created for you in the container. This does not copy the files, it enables the docker container to access the files on the local filesystem, so any changes you make are visible from outside the docker container. If you delete the files from within the docker container, they are gone forever. If you delete the docker container, your files will not be deleted. The github repository will always be cloned into a new directory in your container. I don't think it's possible to have your home directory in the container (/home/rstudio) also be the cloned github repository. 
 
 ```
 sudo docker run -d --cpus 30 -p 8796:8787 -e DISABLE_AUTH=true -e ROOT=TRUE -e PASSWORD=rocker --name example_rocker_with_github \
@@ -16,15 +14,15 @@ sudo docker run -d --cpus 30 -p 8796:8787 -e DISABLE_AUTH=true -e ROOT=TRUE -e P
 ```
 
 
-4) You will then have a blank RStudio session accessible via your browser using the port you specified (if you are running it on your own computer, localhost:8787 is the default address). Change the first part of the -p option in the docker run command to change the port you use (for example: 8000:8787 will make the server accessible on port 8000). The only files visible should the directories you linked to the container using -v.
+3) You will then have a blank RStudio session accessible via your browser using the port you specified (if you are running it on your own computer, localhost:8787 is the default address). Change the first part of the -p option in the docker run command to change the port you use (for example: 8000:8787 will make the server accessible on port 8000). The only files visible should the directories you linked to the container using -v.
 
-6) Git will already be installed as part of the container, but the software to generate the SSH keys is not, so run the following in a bash terminal. RStudio-server has a terminal window built in, just click the "Terminal" tab at the top left of the console.
+4) Git will already be installed as part of the container, but the software to generate the SSH keys is not, so run the following in a bash terminal. RStudio-server has a terminal window built in, just click the "Terminal" tab at the top left of the console.
 
 ```
 sudo apt-get update
 sudo apt install openssh-client
 ```
-6) Now we need to set up our container to use our github username and email address. Run the following in a bash terminal:
+5) Now we need to set up our container to use our github username and email address. Run the following in a bash terminal:
 ```
 git config --global user.email "you@example.com"
 git config --global user.name "username"
@@ -61,7 +59,7 @@ ssh-ed25519 DABAC3NzaC1lZDI1NTE5AAAAIMd5fYkW8tqmXme7ge+/oXws14kLXTilQZSKo+wBq0sP
 16) Navigate to the repository you want to clone on the github site, for example https://github.com/CBFLivUni/example_repo
 17) Click "Code", then underneath where it says "Clone" click the "SSH" button. Copy the address to your clipboard, it will look like: git@github.com:CBFLivUni/example_repo.git
 18) In RStudio go to File > New project > Version control > Git.
-19) Paste the address of the repository from your clipboard where it says "Repository URL". The Project directory name will be automatically populated.
+19) Paste the address of the repository from your clipboard where it says "Repository URL". The Project directory name will be automatically populated. RStudio will automatically detect that this is an SSH address.
 20) Choose where on your container you want to clone the repository. You can choose ~, in which case it will be cloned to /home/rstudio/your_repo_name.
 21) Click Create Project.
 22) It may ask whether you trust the authenticity of host "github.com", type "yes". If you want you can verify that the RSA key in the warning messsage matches that on the github website (https://docs.github.com/en/github/authenticating-to-github/githubs-ssh-key-fingerprints)
