@@ -1,7 +1,8 @@
 # how to set up an RStudio server docker container and link it to a repository with authentication using SSH keys
 
-This assumes you have docker installed on a Linux machine and the permission to run it.
-Remember that github cannot store large amount of data, so keep your data separate or add your data directory to your .gitignore file.
+### This assumes you have docker installed on a Linux machine and the permission to run it.
+
+### Remember that github cannot store large amount of data, so keep your data separate or add your data directory to your .gitignore file.
 
 1) On github, create a repository for your project (like this one)
 2) On your linux machine, start a new "rocker" Docker container for whichever version of R you want. If you just want the latest rocker build you can specify "latest" instead of a version number. An example command to start the Docker container is below. The -v (volume) option links a directory on the local filesystem to a location within the container. The locations after the ":" will be created for you in the container. This does not copy the files, it enables the docker container to access the files on the local filesystem, so any changes you make are visible from outside the docker container. If you delete the files from within the docker container, they are gone forever. If you delete the docker container, your files will not be deleted. The github repository will always be cloned into a new directory in your container. I don't think it's possible to have your home directory in the container (/home/rstudio) also be the cloned github repository. 
